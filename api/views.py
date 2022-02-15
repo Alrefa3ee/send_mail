@@ -3,8 +3,23 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import StudentSerializer
 from rest_framework.permissions import IsAuthenticated
+import smtplib
+from email.mime.text import MIMEText
+def send(text):
+    recipients = ["abd516693@gmail.com"]
+    sender = "alrefaeee132@gmail.com"
+    subject = "report reminder"
+    body = text
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = ", ".join(recipients)
 
-
+    session = smtplib.SMTP('smtp.gmail.com', 587)
+    session.starttls()
+    session.login(sender, 'onifdwhzgfizkwiz')
+    send_it = session.sendmail(sender, recipients, msg.as_string())
+    session.quit()
 # Create your views here.
 
 def home(request):
@@ -22,17 +37,18 @@ class TestView(APIView):
         parmission_classes = (IsAuthenticated,)
         serializer = StudentSerializer(data = request.data)
         if serializer.is_valid():
+            
             data = dict(serializer.data)
             data_list = [*data.values()]
-            msg = f"from : {data_list[0]} || name : {data_list[1]} || subject : {data_list[2]} || number_phone : {data_list[3]} || context : {data_list[4]}"
-            import smtplib
-            sender_email = "alrefaeee132@gmail.com"
-            rec_email = "abd516693@gmail.com"
-            massage = msg
-            server = smtplib.SMTP("smtp.gmail.com",587)
-            server.starttls()
-            server.login(sender_email,"onifdwhzgfizkwiz")
-            server.sendmail(sender_email,rec_email,massage)
+            print(type(data_list),type(data))
+                         
+            msg = f"""from : {data_list[0]} 
+            name : {data_list[1]} 
+            subject : {data_list[2]} 
+            number_phone : {data_list[3]} 
+            context : {data_list[4]}"""
+
             # server.close()
+            send(msg)
             return Response({"the operation":"successfully done"})
         return Response(serializer.errors)
