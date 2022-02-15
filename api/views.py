@@ -22,9 +22,17 @@ class TestView(APIView):
         parmission_classes = (IsAuthenticated,)
         serializer = StudentSerializer(data = request.data)
         if serializer.is_valid():
-            # serializer.save()
             data = dict(serializer.data)
             data_list = [*data.values()]
-            send(f"from : {data_list[0]} || name : {data_list[1]} || subject : {data_list[2]} || number_phone : {data_list[3]} || context : {data_list[4]}")
+            msg = f"from : {data_list[0]} || name : {data_list[1]} || subject : {data_list[2]} || number_phone : {data_list[3]} || context : {data_list[4]}"
+            import smtplib
+            sender_email = "alrefaeee132@gmail.com"
+            rec_email = "abd516693@gmail.com"
+            massage = msg
+            server = smtplib.SMTP("smtp.gmail.com",587)
+            server.starttls()
+            server.login(sender_email,"onifdwhzgfizkwiz")
+            server.sendmail(sender_email,rec_email,massage)
+            # server.close()
             return Response({"the operation":"successfully done"})
         return Response(serializer.errors)
