@@ -1,1 +1,1 @@
-web: gunicorn memeAPI.wsgi
+web: gunicorn send_mail.wsgi
