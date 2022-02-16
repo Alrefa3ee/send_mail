@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'rest_framework',
+    'corsheaders',
     'rest_framework.authtoken',
 ]
 
@@ -57,9 +58,13 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsPostCsrfMiddleware',
 ]
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-    'https://sendreactmail.herokuapp.com/'
-)
+CORS_ORIGIN_WHITELIST = [
+    'http://google.com',
+    'https://sendreactmail.herokuapp.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:9000',
+    'http://localhost:3000',
+]
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
