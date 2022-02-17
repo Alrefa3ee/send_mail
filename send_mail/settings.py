@@ -64,6 +64,9 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
     'http://127.0.0.1:9000',
     'http://localhost:3000',
+    'https://dazzling-jepsen-6b9c88.netlify.app',
+    'https://www.mmybio.tk/',
+    'https://mmybio.tk/'
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
